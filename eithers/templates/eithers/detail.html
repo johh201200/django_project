@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center">
+  <p>{{ question.title }}</p>
+</h1>
+<div class="row">
+  <div class="card col-5" style="width: 18rem;">
+    <img src="{{ question.image_a.url }}" alt="{{ question.image_a }}" class="card-img-top">
+    <div class="card-body">
+      <p class="card-text">{{ question.issue_a }}</p>
+    </div>
+  </div>
+  <div class="col-2 text-center m-auto">
+    <h1>vs</h1>
+  </div>
+  <div class="card col-5" style="width: 18rem;">
+    <img src="{{ question.image_b.url }}" alt="{{ question.image_b }}" class="card-img-top">
+    <div class="card-body">
+      <p class="card-text">{{ question.issue_b }}</p>
+    </div>
+  </div>
+</div>
+<div class="progress mt-3">
+  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{per_left}}%" aria-valuenow="10"
+    aria-valuemin="0" aria-valuemax="100">
+    <p class="text-light my-auto">{{ per_left }}</p>
+  </div>
+  <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: {{ per_right }}%"
+    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+    <p class="text-light my-auto">{{ per_right }}</p>
+  </div>
+</div>
+
+<hr>
+{% for answer in answers %}
+  <div class="row">
+    <p style="display:inline;" class="mr-auto">{{ answer.pick }} : {{ answer.comment }}</p>
+    <form action="{% url 'eithers:answers_delete' answer.pk question.pk%}" method="POST" style="display: inline;"
+      onclick="return confirm('진짜 지울거야??')" class="ml-auto">
+      {% csrf_token %}
+      <input type="submit" value="DELETE">
+    </form>
+  </div>
+  <hr>
+{% endfor %}
+
+<form action="{% url 'eithers:answers_create' question.pk %}" method='POST'>
+  {% csrf_token %}
+  <label for="pick">PICK</label>
+  <input type="number" name="pick" id="pick">
+  <label for="comment">COMMENT</label>
+  <input type="text" name="comment" id="comment">
+  <input type="submit" value="제출">
+</form>
+{% endblock %}

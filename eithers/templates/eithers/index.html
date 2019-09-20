@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center">index</h1>
+<hr>
+{% for question in questions %}
+  <div class="card w-100" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title text-center">{{ question.title }}  [{{ question.answer_set.all|length }}]</h5>
+      <a href="{% url 'eithers:detail' question.pk %}" class="btn btn-primary col align-self-end">의견제시 하러가기</a>
+    </div>
+  </div>
+<hr>
+{% endfor %}
+{% endblock  %}
