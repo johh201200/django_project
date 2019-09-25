@@ -1,4 +1,4 @@
-## either project 
+## either project
 
 > [either.io](http://either.io/)
 >
